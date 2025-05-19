@@ -17,3 +17,6 @@ test:
 lint:
 	@echo "==> Checking source code against linters..."
 	@if command -v golangci-lint; then (golangci-lint run ./...); else ($(GOPATH)/bin/golangci-lint run ./...); fi
+
+generate:
+	@go generate ./internal/langserver/handlers/command/

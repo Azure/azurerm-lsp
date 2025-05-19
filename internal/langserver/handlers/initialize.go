@@ -30,7 +30,10 @@ func (svc *service) Initialize(ctx context.Context, params lsp.InitializeParams)
 			},
 			HoverProvider: true,
 
-			CodeActionProvider:         false,
+			CodeActionProvider: lsp.CodeActionOptions{
+				CodeActionKinds: ilsp.SupportedCodeActions.AsSlice(),
+				ResolveProvider: false,
+			},
 			DeclarationProvider:        false,
 			DefinitionProvider:         false,
 			CodeLensProvider:           nil,
@@ -39,7 +42,13 @@ func (svc *service) Initialize(ctx context.Context, params lsp.InitializeParams)
 			DocumentSymbolProvider:     false,
 			WorkspaceSymbolProvider:    false,
 			Workspace:                  nil,
-			ExecuteCommandProvider:     nil,
+
+			ExecuteCommandProvider: &lsp.ExecuteCommandOptions{
+				Commands: availableCommands(),
+				WorkDoneProgressOptions: lsp.WorkDoneProgressOptions{
+					WorkDoneProgress: true,
+				},
+			},
 		},
 	}
 

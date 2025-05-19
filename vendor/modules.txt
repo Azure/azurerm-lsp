@@ -1,6 +1,9 @@
 # dario.cat/mergo v1.0.1
 ## explicit; go 1.13
 dario.cat/mergo
+# github.com/Azure/aztfmigrate v1.15.1-0.20250304070708-bd64aaa3affc
+## explicit; go 1.23.0
+github.com/Azure/aztfmigrate/tf
 # github.com/Masterminds/goutils v1.1.1
 ## explicit
 github.com/Masterminds/goutils
@@ -72,6 +75,16 @@ github.com/hashicorp/go-uuid
 # github.com/hashicorp/go-version v1.7.0
 ## explicit
 github.com/hashicorp/go-version
+# github.com/hashicorp/hc-install v0.9.1
+## explicit; go 1.22.0
+github.com/hashicorp/hc-install
+github.com/hashicorp/hc-install/errors
+github.com/hashicorp/hc-install/fs
+github.com/hashicorp/hc-install/internal/build
+github.com/hashicorp/hc-install/internal/src
+github.com/hashicorp/hc-install/internal/validators
+github.com/hashicorp/hc-install/product
+github.com/hashicorp/hc-install/src
 # github.com/hashicorp/hcl-lang v0.0.0-20211123142056-191cd51dec5b
 ## explicit; go 1.14
 github.com/hashicorp/hcl-lang/decoder
@@ -83,10 +96,19 @@ github.com/hashicorp/hcl-lang/schema
 github.com/hashicorp/hcl/v2
 github.com/hashicorp/hcl/v2/ext/customdecode
 github.com/hashicorp/hcl/v2/ext/typeexpr
+github.com/hashicorp/hcl/v2/hcldec
 github.com/hashicorp/hcl/v2/hclsyntax
+github.com/hashicorp/hcl/v2/hclwrite
 # github.com/hashicorp/logutils v1.0.0
 ## explicit
 github.com/hashicorp/logutils
+# github.com/hashicorp/terraform-exec v0.22.0
+## explicit; go 1.22.0
+github.com/hashicorp/terraform-exec/internal/version
+github.com/hashicorp/terraform-exec/tfexec
+# github.com/hashicorp/terraform-json v0.24.0
+## explicit; go 1.18
+github.com/hashicorp/terraform-json
 # github.com/hashicorp/terraform-plugin-go v0.26.0
 ## explicit; go 1.22.0
 github.com/hashicorp/terraform-plugin-go/tfprotov5
@@ -116,6 +138,23 @@ github.com/hashicorp/terraform-plugin-sdk/v2/terraform
 # github.com/huandu/xstrings v1.5.0
 ## explicit; go 1.12
 github.com/huandu/xstrings
+# github.com/magodo/tfadd v0.10.1-0.20240902124619-bd18a56f410d
+## explicit; go 1.21
+github.com/magodo/tfadd/addr
+github.com/magodo/tfadd/providers/aws
+github.com/magodo/tfadd/providers/azapi
+github.com/magodo/tfadd/providers/azurerm
+github.com/magodo/tfadd/providers/google
+github.com/magodo/tfadd/schema
+github.com/magodo/tfadd/tfadd
+github.com/magodo/tfadd/tfadd/internal
+# github.com/magodo/tfpluginschema v0.0.0-20240902090353-0525d7d8c1c2
+## explicit; go 1.21
+github.com/magodo/tfpluginschema/schema
+# github.com/magodo/tfstate v0.0.0-20241016043929-2c95177bf0e6
+## explicit; go 1.18
+github.com/magodo/tfstate
+github.com/magodo/tfstate/terraform/jsonschema
 # github.com/mattn/go-colorable v0.1.13
 ## explicit; go 1.15
 github.com/mattn/go-colorable
@@ -157,8 +196,6 @@ github.com/spf13/afero/mem
 # github.com/spf13/cast v1.7.0
 ## explicit; go 1.19
 github.com/spf13/cast
-# github.com/stretchr/testify v1.9.0
-## explicit; go 1.17
 # github.com/vmihailenco/msgpack v4.0.4+incompatible
 ## explicit
 github.com/vmihailenco/msgpack
@@ -192,8 +229,11 @@ golang.org/x/crypto/scrypt
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
-# golang.org/x/mod v0.22.0
+# golang.org/x/mod v0.23.0
 ## explicit; go 1.22.0
+golang.org/x/mod/internal/lazyregexp
+golang.org/x/mod/modfile
+golang.org/x/mod/module
 golang.org/x/mod/semver
 # golang.org/x/sync v0.13.0
 ## explicit; go 1.23.0
@@ -207,7 +247,7 @@ golang.org/x/sys/windows
 ## explicit; go 1.23.0
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# golang.org/x/tools v0.26.0
+# golang.org/x/tools v0.30.0
 ## explicit; go 1.22.0
 golang.org/x/tools/cmd/stringer
 golang.org/x/tools/go/gcexportdata

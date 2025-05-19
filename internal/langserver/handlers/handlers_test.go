@@ -24,6 +24,7 @@ func initializeResponse(t *testing.T, commandPrefix string) string {
 			},
 			"completionProvider": {
 			  "triggerCharacters": [
+				"",
 				" ",
 				".",
 				"/",
@@ -42,9 +43,8 @@ func initializeResponse(t *testing.T, commandPrefix string) string {
 			},
 			"executeCommandProvider": {
 				"commands": [
-					"azurerm.convertJsonToazurerm",
-					"azurerm.aztfmigrate",
-					"azurerm.telemetry"
+					"azurerm.telemetry",
+					"azurerm.aztfauthorize"
 				],
 				"workDoneProgress": true
 			}
