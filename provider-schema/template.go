@@ -1,20 +1,18 @@
 package provider_schema
 
 var (
-	ResourceTemplate = `
-## %s</span>
+	ResourceTemplate = `## %s
 
-[📖 Documentation](%s) | [🐛 See Related Issue](%s)
+[📖 Documentation](<%s>) | [🔍 See Related Issues](<%s>) | [🐛 Raise Issue](<%s>)
 
 ---
 
 %s
 `
-	AttributeTemplate = `
-## %s</span> 
+	AttributeTemplate = `## %s
 **[%s] %s**
 
-[📖 Documentation](%s) | [🐛 See Related Issue](%s)
+[📖 Documentation](<%s>) | [🔍 See Related Issues](<%s>) | [🐛 Raise Issue](<%s>)
 
 ---
 

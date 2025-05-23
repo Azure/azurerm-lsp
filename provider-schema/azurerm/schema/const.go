@@ -15,5 +15,6 @@ const (
 )
 
 const (
-	GitHubIssuesURL = "https://github.com/hashicorp/terraform-provider-azurerm/issues?q=%[1]s"
+	GitHubIssuesURL    = "https://github.com/hashicorp/terraform-provider-azurerm/issues?q=is:issue %[1]s"
+	NewGitHubIssuesURL = "https://github.com/hashicorp/terraform-provider-azurerm/issues/new?template=Bug_Report.yml&title=%[1]s "
 )

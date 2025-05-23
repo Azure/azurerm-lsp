@@ -27,5 +27,5 @@ func String(input string) *string {
 }
 
 func Range(input hcl.Range) *hcl.Range {
-	return &input
+    return &input
 }

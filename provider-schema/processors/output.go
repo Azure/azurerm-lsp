@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 const outputFileName = "combined_output.json"
@@ -39,7 +40,11 @@ func ProcessOutput(providerPath, gitBranch, outputDir string) (TerraformObjects,
 	}
 
 	// Step 5: Write combined output to a file
-	err = os.WriteFile(outputDir+"/"+outputFileName, jsonOutput, 0644)
+	err = os.WriteFile(
+		filepath.Join(outputDir, outputFileName),
+		jsonOutput,
+		0600, // More restrictive permissions
+	)
 	if err != nil {
 		return nil, fmt.Errorf("error writing combined output to file: %v", err)
 	}

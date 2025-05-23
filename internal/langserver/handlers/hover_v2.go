@@ -3,9 +3,11 @@ package handlers
 import (
 	"context"
 
+	"github.com/Azure/azurerm-lsp/internal/lsp"
 	"github.com/Azure/azurerm-lsp/internal/parser"
 	"github.com/Azure/azurerm-lsp/internal/protocol"
-	"github.com/Azure/azurerm-lsp/provider-schema"
+	provider_schema "github.com/Azure/azurerm-lsp/provider-schema"
+	"github.com/hashicorp/hcl/v2"
 )
 
 func (svc *service) HandleHover(ctx context.Context, params protocol.TextDocumentPositionParams) (*protocol.Hover, error) {
@@ -26,7 +28,11 @@ func (svc *service) HandleHover(ctx context.Context, params protocol.TextDocumen
 			return nil, nil
 		}
 
-		ctxInfo.ParsedPath += "." + fieldName
+		if ctxInfo.ParsedPath != "" {
+			ctxInfo.ParsedPath += "." + fieldName
+		} else {
+			ctxInfo.ParsedPath = fieldName
+		}
 	}
 
 	var content string
@@ -41,10 +47,36 @@ func (svc *service) HandleHover(ctx context.Context, params protocol.TextDocumen
 		return nil, nil
 	}
 
+	var keyRange hcl.Range
+	if ctxInfo.Attribute != nil {
+		keyRange = ctxInfo.Attribute.NameRange
+	} else if ctxInfo.SubBlock != nil {
+		if len(ctxInfo.SubBlock.LabelRanges) == 0 {
+			keyRange = ctxInfo.SubBlock.TypeRange
+		} else {
+			keyRange = ctxInfo.SubBlock.LabelRanges[0]
+		}
+	} else {
+		if len(ctxInfo.Block.LabelRanges) == 0 {
+			keyRange = ctxInfo.Block.TypeRange
+		} else {
+			keyRange = ctxInfo.Block.LabelRanges[0]
+		}
+	}
+
+	pos := lsp.LSPPosToHCL(params.Position)
+	// Only show hover if position is within the key range
+	if !keyRange.ContainsPos(pos) ||
+		(pos.Line == keyRange.Start.Line && pos.Column < keyRange.Start.Column) ||
+		(pos.Line == keyRange.End.Line && pos.Column > keyRange.End.Column) {
+		return nil, nil // Not on key, do not show hover
+	}
+
 	return &protocol.Hover{
 		Contents: protocol.MarkupContent{
 			Kind:  protocol.Markdown,
 			Value: content,
 		},
+		Range: lsp.HCLRangeToLSP(keyRange),
 	}, nil
 }

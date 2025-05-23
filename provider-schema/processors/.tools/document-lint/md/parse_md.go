@@ -6,6 +6,7 @@ package md
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"unicode"
 
@@ -125,9 +126,12 @@ func (m *Mark) addLineOrItem(num int, line string, typ ItemType) {
 }
 
 func MustNewMarkFromFile(file string) *Mark {
-	bs, err := os.ReadFile(file)
+	if !filepath.IsAbs(file) {
+		return nil
+	}
+	bs, err := os.ReadFile(filepath.Clean(file))
 	if err != nil {
-		panic(err)
+		return nil
 	}
 	m := newMarkFromString(string(bs), file)
 	return m

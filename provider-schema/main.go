@@ -2,16 +2,22 @@ package provider_schema
 
 import (
 	"fmt"
+	"github.com/Azure/azurerm-lsp/provider-schema/processors"
 	"os"
 	"os/exec"
-
-	"github.com/Azure/azurerm-lsp/provider-schema/processors"
+	"path/filepath"
 )
 
 func GenerateProviderSchema(providerPath, gitBranch string) {
 	dirPath := os.Getenv("PWD") + "/provider-schema"
 
-	cmd := exec.Command("bash", "-c", fmt.Sprintf("%s/processors/.tools/generate-provider-schema/run.sh %s %s", dirPath, providerPath, gitBranch))
+	cmd := exec.Command(
+		"bash",
+		"-c",
+		filepath.Join(dirPath, "processors/.tools/generate-provider-schema/run.sh"),
+		providerPath,
+		gitBranch,
+	)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

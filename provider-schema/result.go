@@ -213,6 +213,7 @@ func GetResourceContent(resourceName string) (string, bool, error) {
 		resourceName,
 		resourceInfo.GetResourceOrDataSourceDocLink(),
 		resourceInfo.GetGitHubIssueLink(),
+		resourceInfo.GetRaiseGitHubIssueLink(),
 		resourceInfo.GetDocContent(),
 	), resourceInfo.IsDataSource(), nil
 }
@@ -232,6 +233,7 @@ func GetAttributeContent(resourceName, path string) (string, *schema.SchemaAttri
 		prop.AttributeType.FriendlyName(),
 		prop.GetAttributeDocLink(obj.GetResourceOrDataSourceDocLink()),
 		prop.GetGitHubIssueLink(),
+		prop.GetRaiseGitHubIssueLink(),
 		strings.Join(prop.GetDetails(), "\n"),
 		GetPropertyDocContent(resourceName, prop),
 	), prop, nil

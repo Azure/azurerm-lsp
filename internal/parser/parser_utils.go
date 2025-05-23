@@ -105,7 +105,7 @@ func AttemptReparse(content string, lineNum uint32) (updatedContent, fieldName s
 	}
 
 	lineContent := strings.TrimSpace(lineContents[lineNum])
-	if lineContent == "" {
+	if lineContent == "" || lineContent == schema.AzureRMPrefix {
 		return "", "", true, fmt.Errorf("empty line content")
 	}
 
@@ -116,7 +116,7 @@ func AttemptReparse(content string, lineNum uint32) (updatedContent, fieldName s
 
 	updatedContent = strings.Join(lineContents[:lineNum], "\n") + "\n\n" + strings.Join(lineContents[lineNum+1:], "\n")
 	fieldName = strings.TrimSpace(fieldParts[0])
-	if fieldName == "" {
+	if fieldName == "" || fieldName == schema.AzureRMPrefix {
 		return "", "", true, fmt.Errorf("invalid field name")
 	}
 

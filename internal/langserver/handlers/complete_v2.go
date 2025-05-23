@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azurerm-lsp/internal/parser"
 	"github.com/Azure/azurerm-lsp/internal/protocol"
 	"github.com/Azure/azurerm-lsp/internal/utils"
@@ -37,10 +36,14 @@ func (svc *service) HandleComplete(ctx context.Context, params protocol.Completi
 		}
 
 		if ctxInfo.Block != nil || ctxInfo.SubBlock != nil || ctxInfo.Attribute != nil {
-			return GetAttributeCompletions(ctxInfo.Resource, ctxInfo.ParsedPath+"."+fieldName), nil
+			if ctxInfo.ParsedPath != "" {
+				fieldName = ctxInfo.ParsedPath + "." + fieldName
+			}
+
+			return GetAttributeCompletions(ctxInfo.Resource, fieldName), nil
 		}
 
-		return GetTopLevelCompletions(params), nil
+		return nil, nil
 	}
 
 	switch {
@@ -76,7 +79,7 @@ func GetTopLevelCompletions(params protocol.CompletionParams) []protocol.Complet
 		}
 
 		items = append(items, protocol.CompletionItem{
-			Label:            fmt.Sprintf("☁️(%s) %s", kind, name),
+			Label:            name,
 			InsertText:       snippet,
 			InsertTextFormat: protocol.SnippetTextFormat,
 			Kind:             protocol.SnippetCompletion,
@@ -108,10 +111,9 @@ func GetBlockAttributeCompletions(resourceName, path string) []protocol.Completi
 		}
 
 		items = append(items, protocol.CompletionItem{
-			Label:      fmt.Sprintf("☁️(property) %s (%s)", p.Name, prop.GetRequirementType()),
-			Kind:       protocol.SnippetCompletion,
+			Label:      p.Name,
+			Kind:       protocol.PropertyCompletion,
 			SortText:   p.GetSortOrder(),
-			Detail:     "Property Info",
 			InsertText: p.Name,
 			Documentation: protocol.MarkupContent{
 				Kind:  protocol.Markdown,
@@ -127,13 +129,21 @@ func GetAttributeCompletions(resourceName, path string) []protocol.CompletionIte
 	if err != nil {
 		return nil
 	}
+	content, _, err := provider_schema.GetAttributeContent(resourceName, path)
+	if err != nil {
+		return nil
+	}
 
 	items := make([]protocol.CompletionItem, 0, len(values))
 	for _, val := range values {
 		items = append(items, protocol.CompletionItem{
-			Label:      "☁️(value) " + val,
-			Kind:       protocol.SnippetCompletion,
-			InsertText: val,
+			Label:  val,
+			Kind:   protocol.ValueCompletion,
+			Detail: "Possible value for " + path,
+			Documentation: protocol.MarkupContent{
+				Kind:  protocol.Markdown,
+				Value: content,
+			},
 		})
 	}
 

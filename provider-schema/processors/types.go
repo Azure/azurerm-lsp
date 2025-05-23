@@ -39,6 +39,10 @@ func (b *TerraformObject) GetGitHubIssueLink() string {
 	return fmt.Sprintf(schema.GitHubIssuesURL, b.GetName())
 }
 
+func (b *TerraformObject) GetRaiseGitHubIssueLink() string {
+	return fmt.Sprintf(schema.NewGitHubIssuesURL, fmt.Sprintf("`%s`", b.GetName()))
+}
+
 func (b *TerraformObject) GetSnippet() string {
 	snippet := strings.TrimSpace(b.ExampleHCL)
 	snippet = strings.TrimPrefix(snippet, "```hcl")

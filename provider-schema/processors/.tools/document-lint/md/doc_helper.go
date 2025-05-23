@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"sync"
@@ -61,7 +62,10 @@ var titleReg = regexp.MustCompile(`\npage_title:[^\n]*(azurerm_[a-zA-Z0-9_]+)"?`
 
 func fileResource(path string) string {
 	// match content
-	content, _ := os.ReadFile(path)
+	content, err := os.ReadFile(filepath.Clean(path))
+	if err != nil {
+		return ""
+	}
 	// if content match pattern
 	if subs := titleReg.FindStringSubmatch(string(content)); len(subs) > 1 {
 		return subs[1]
